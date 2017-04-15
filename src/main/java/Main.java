@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main
@@ -24,14 +28,14 @@ public class Main
             //Create new csv file
             CSVWriter writer = new CSVWriter(new FileWriter(outputCSV));
 
-            List<Result> results = new ArrayList<Result>();
+            List<Result> results = new ArrayList<>();
 
-            String[] record = null;
+            String[] record;
             while ((record =  reader.readNext()) != null)
             {
                 Result result = new Result();
                 result.setOrgId(record[0]);
-                //result.setDate(record[6]);
+                result.setDate(stringToDate(record[6]));
                 result.setSiteId(record[21]);
 
                 if (record[31].equals(""))
@@ -56,7 +60,6 @@ public class Main
                         result.setConcentration(Double.valueOf(record[34]));
 
                     result.setProvider(record[63]);
-
                 }
                 else
                 {
@@ -89,7 +92,7 @@ public class Main
 
             reader.close();
         }
-        catch (FileNotFoundException ex)
+        catch (ParseException ex)
         {
             ex.printStackTrace();
         }
@@ -97,6 +100,13 @@ public class Main
         {
             ex.printStackTrace();
         }
+    }
+
+    private static LocalDate stringToDate(String dateString) throws ParseException
+    {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+
+        return LocalDate.parse(dateString, dateTimeFormatter);
     }
 
     private static List<String[]> toStringArray(List<Result> resultList)
@@ -107,7 +117,7 @@ public class Main
         results.add(new String[] {"org_id", "site_id", "date", "characteristic", "concentration", "conc_unit", "provider"});
         for (Result result : resultList)
         {
-            results.add(new String[] {result.getOrgId(), result.getSiteId(), "DATE",
+            results.add(new String[] {result.getOrgId(), result.getSiteId(), result.getDate().toString(),
                     result.getCharacteristic(), result.getConcentration().toString(), result.getConcentrationUnit(),
                     result.getProvider()});
         }

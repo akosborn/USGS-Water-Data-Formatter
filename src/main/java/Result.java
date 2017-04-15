@@ -1,10 +1,10 @@
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Result
 {
     private String orgId;
     private String siteId;
-    private Date date;
+    private LocalDate date;
     private String characteristic;
     private Double concentration;
     private String concentrationUnit;
@@ -30,12 +30,12 @@ public class Result
         this.siteId = siteId;
     }
 
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }
 
-    public void setDate(Date date)
+    public void setDate(LocalDate date)
     {
         this.date = date;
     }
