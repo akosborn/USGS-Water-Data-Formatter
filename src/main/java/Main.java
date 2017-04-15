@@ -1,12 +1,10 @@
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -91,6 +89,7 @@ public class Main
             writer.writeAll(data);
 
             reader.close();
+            writer.close();
         }
         catch (ParseException ex)
         {
