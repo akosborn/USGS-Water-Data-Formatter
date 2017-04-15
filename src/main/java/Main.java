@@ -1,7 +1,9 @@
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -11,15 +13,18 @@ public class Main
 {
     public static void main(String[] args)
     {
-        String csvFile = "/home/andrew/Desktop/result-copy.csv";
+        String inputCSV = "/home/andrew/Desktop/result-copy.csv";
+        String outputCSV = "/home/andrew/Desktop/result-formatted.csv";
         try
         {
             //Build reader instance
-            //Read result.csv
             //Default separator is comma
             //Default quote character is double quote
-            //Start reading from second line
-            CSVReader reader = new CSVReader(new FileReader(csvFile));
+            CSVReader reader = new CSVReader(new FileReader(inputCSV));
+
+            //Build writer instance
+            //Create new csv file
+            CSVWriter writer = new CSVWriter(new FileWriter(outputCSV));
 
             //Read all rows
             List<String[]> allResults = reader.readAll();
@@ -27,7 +32,6 @@ public class Main
             {
                 System.out.println(Arrays.toString(result));
             }
-            System.out.println("Total records: "  + allResults.size());
         }
         catch (FileNotFoundException ex)
         {
